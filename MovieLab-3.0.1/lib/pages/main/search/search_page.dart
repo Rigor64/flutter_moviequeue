@@ -28,7 +28,6 @@ class SearchPage extends StatelessWidget {
               backgroundColor: kSecondaryColor,
               toolbarHeight: 75,
               elevation: 1.0,
-              title: const SearchBar(),
               bottom: TabBar(
                 unselectedLabelColor: Colors.white.withOpacity(0.4),
                 splashFactory: NoSplash.splashFactory,

@@ -12,3 +12,18 @@ https://flutterawesome.com/a-completed-functional-flutter-app-findseat-bloc-json
 https://flutterawesome.com/a-cross-platform-app-to-save-blood-pressure-values-with-export-function/
 
 https://flutter.github.io/samples/gallery.html
+
+
+
+
+Flutter animation
+
+https://flutterawesome.com/a-collection-of-custom-advance-flutter-design-animations-and-ui/
+
+
+API IMDB
+https://imdb-api.com/api/#Search-header
+
+https://imdb-api.com/en/API/Top250Movies/k_12345678
+
+https://www.youtube.com/watch?v=UT7RqvtyXLI

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
 
@@ -81,8 +80,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFormField(
                       //box per l'username
+                      style: const TextStyle(color: color5, fontSize: 20),
+                      cursorColor: color2,
                       decoration: const InputDecoration(
                           labelStyle: TextStyle(color: color5),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: color5),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: color2),
+                          ),
                           icon: Icon(
                             Icons.person,
                             color: color5,
@@ -94,7 +101,15 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 16),
                     TextField(
                         //box per la password
+                        style: const TextStyle(color: color5, fontSize: 20),
+                        cursorColor: color2,
                         decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: color5),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: color2),
+                            ),
                             icon: Icon(Icons.key, color: color5),
                             label: Text("Password",
                                 style: TextStyle(color: color5))),
