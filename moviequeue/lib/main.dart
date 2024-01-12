@@ -36,6 +36,9 @@ class MyApp extends StatelessWidget {
         //la prima pagina visualizzata sarà quella del login
         var userData = ref.watch(userProfileProvider);
         if (userData == null) {
+          //
+          //Pagina visualizzata all'avvio dell'applicazione
+          //return const MyHomePage(title: "Hello");
           return const LoginPage();
         } else {
           return Navigator(

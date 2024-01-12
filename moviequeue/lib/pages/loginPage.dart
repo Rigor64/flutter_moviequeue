@@ -46,12 +46,16 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            "images/pc_bg.png", //immagine di background
-            fit: BoxFit.cover,
+          //ho applicato un filtro all'immagine di sfondo
+          ColorFiltered(
+            colorFilter: const ColorFilter.mode(color2, BlendMode.hardLight),
+            child: Image.asset(
+              "images/slashScreenLogin.png", //immagine di background
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 64, vertical: 16),
             child: Center(
               child: Container(
                 //riquadro del login
