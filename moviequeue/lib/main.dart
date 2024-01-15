@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
         if (userData == null) {
           //
           //Pagina visualizzata all'avvio dell'applicazione
-          //return const MyHomePage(title: "Hello");
-          return const LoginPage();
+          return const MyHomePage(title: "Hello");
+          //return const LoginPage();
         } else {
           return Navigator(
               onGenerateInitialRoutes: (navigator, initialRoute) => [

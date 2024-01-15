@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moviequeue/api/api.dart';
+import 'package:moviequeue/models/media.dart';
+import 'package:moviequeue/models/movies.dart';
+import 'package:moviequeue/models/series.dart';
 import 'package:moviequeue/pages/searchPage.dart';
 import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
@@ -7,15 +11,32 @@ import 'package:moviequeue/widgets/homeSlider.dart';
 import 'package:moviequeue/widgets/homeTrandingSlider.dart';
 import 'package:moviequeue/widgets/navDrawer.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:moviequeue/widgets/todoItemPage.dart';
-import 'package:moviequeue/widgets/todoItemViewer.dart';
 
-class MyHomePage extends ConsumerWidget {
+final homePageProvider = Provider((_) => 'HomePage');
+
+class MyHomePage extends ConsumerStatefulWidget {
+  //tipologia di cunsumer widget che può alterare il proprio stato
   final String title;
   const MyHomePage({required this.title, super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyHomePage> createState() => _MyHomePage();
+}
+
+class _MyHomePage extends ConsumerState<MyHomePage> {
+  late Future<List<Media>> trendingMedia;
+  late Future<List<Movies>> popularMovies;
+  late Future<List<Series>> popularSeries;
+  @override
+  void initState() {
+    super.initState();
+    trendingMedia = Api().getTrendingMedia();
+    popularMovies = Api().getPopularMovies();
+    popularSeries = Api().getPopularTvSeries();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     int _bottomNavIndex = 0;
     debugPrint("Building $this");
 
@@ -28,18 +49,32 @@ class MyHomePage extends ConsumerWidget {
         title: const Text(
           "Movie Queue",
           style: TextStyle(fontWeight: FontWeight.w800),
+          textAlign: TextAlign.center,
         ),
+
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
           ),
         ),
-        /*
         actions: [
           //primo bottone
+          IconButton(
+              onPressed: () => {},
+              icon: Icon(
+                Icons.star_rounded,
+                color: color3,
+                size: 35,
+              )),
+          IconButton(
+              onPressed: () => {},
+              icon: Icon(
+                Icons.account_box_rounded,
+                color: color3,
+                size: 35,
+              )),
         ],
-        */
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -58,46 +93,92 @@ class MyHomePage extends ConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const homeTrandingSlider(), //Tranding slider widget
+                  SizedBox(
+                    //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                    child: FutureBuilder(
+                        future: trendingMedia,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            debugPrint(snapshot.error.toString());
+                            return Center(
+                              child: Text(snapshot.error.toString()),
+                            );
+                          } else if (snapshot.hasData) {
+                            return homeTrandingSlider(
+                              snapshot: snapshot,
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
+                  ),
+                  //const homeTrandingSlider(), //Tranding slider widget
                   const SizedBox(
                     height: 20,
                   ),
                   //
                   //secondo carosello
                   const Text(
-                    "Top rate",
+                    "Top rate movies",
                     style: TextStyle(color: color5, fontSize: 20),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  homeSlider(),
+                  SizedBox(
+                    //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                    child: FutureBuilder(
+                        future: popularMovies,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            debugPrint(snapshot.error.toString());
+                            return Center(
+                              child: Text(snapshot.error.toString()),
+                            );
+                          } else if (snapshot.hasData) {
+                            return homeSlider(
+                              snapshot: snapshot,
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
+                  ),
+                  //
                   const SizedBox(
                     height: 20,
                   ),
                   //
                   //terzo carosello
                   const Text(
-                    "Upcoming movies",
+                    "Top rate Tv series",
                     style: TextStyle(color: color5, fontSize: 20),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  homeSlider(),
-                  /*
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //TodoItemsCounterViewer(),
-                  ],
-                ),
-                
-                SizedBox(height: 8),
-                Expanded(
-                  child: _TodoList(),
-                ),
-                */
+                  SizedBox(
+                    //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                    child: FutureBuilder(
+                        future: popularSeries,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            debugPrint(snapshot.error.toString());
+                            return Center(
+                              child: Text(snapshot.error.toString()),
+                            );
+                          } else if (snapshot.hasData) {
+                            return homeSlider(
+                              snapshot: snapshot,
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
+                  ),
                 ])),
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -109,7 +190,7 @@ class MyHomePage extends ConsumerWidget {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
         onTap: (index) => _bottomNavIndex = index,
-        backgroundColor: color2,
+        backgroundColor: color5,
       ),
       floatingActionButton: FloatingActionButton(
         //pulsante centrale

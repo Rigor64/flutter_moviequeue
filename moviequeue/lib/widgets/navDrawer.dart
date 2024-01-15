@@ -6,7 +6,7 @@ class NavDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Sto aprendo uil menu laterale");
+    debugPrint("Apro il menu laterale");
     return Drawer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment
