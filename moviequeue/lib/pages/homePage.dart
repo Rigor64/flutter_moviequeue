@@ -45,13 +45,13 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
       backgroundColor: color1,
       appBar: AppBar(
         //barra in alto
+        toolbarHeight: 60,
         backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           "Movie Queue",
           style: TextStyle(fontWeight: FontWeight.w800),
           textAlign: TextAlign.center,
         ),
-
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -62,14 +62,14 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
           //primo bottone
           IconButton(
               onPressed: () => {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.star_rounded,
                 color: color3,
                 size: 35,
               )),
           IconButton(
               onPressed: () => {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.account_box_rounded,
                 color: color3,
                 size: 35,
@@ -113,7 +113,6 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                           }
                         }),
                   ),
-                  //const homeTrandingSlider(), //Tranding slider widget
                   const SizedBox(
                     height: 20,
                   ),

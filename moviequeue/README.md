@@ -1,9 +1,5 @@
 # moviequeue
 
-IMDB API : k_12345678
-
-
-
 
 ## Getting Started
 

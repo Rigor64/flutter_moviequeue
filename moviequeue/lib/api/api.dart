@@ -29,6 +29,19 @@ class Api {
     }
   }
 
+/*
+  Future<List<Movies>> getTrendingMovies() async {
+    //status code che identifica se la comunicazione sta avvenendo
+    //funzione asincrona per far lavorare le varie parti non contemporaneamente
+    final response = await http.get(Uri.parse(_trendingUrl));
+    if (response.statusCode == 200) {
+      final decodedData = json.decode(response.body)['results'] as List;
+      return decodedData.map((movies) => Movies.fromJson(movies)).toList();
+    } else {
+      throw Exception("Errore");
+    }
+  }
+*/
   Future<List<Movies>> getPopularMovies() async {
     //status code che identifica se la comunicazione sta avvenendo
     //funzione asincrona per far lavorare le varie parti non contemporaneamente

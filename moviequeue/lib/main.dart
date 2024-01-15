@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moviequeue/pages/homepage.dart';
@@ -8,6 +9,8 @@ import 'package:moviequeue/vars.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 }
 
 class MyApp extends StatelessWidget {
@@ -32,23 +35,25 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: Consumer(builder: (ctx, ref, _) {
-        //la prima pagina visualizzata sarà quella del login
-        var userData = ref.watch(userProfileProvider);
-        if (userData == null) {
-          //
-          //Pagina visualizzata all'avvio dell'applicazione
-          return const MyHomePage(title: "Hello");
-          //return const LoginPage();
-        } else {
-          return Navigator(
-              onGenerateInitialRoutes: (navigator, initialRoute) => [
-                    MaterialPageRoute(
-                        builder: (ctx) =>
-                            MyHomePage(title: "Profilo ${userData.username}"))
-                  ]);
-        }
-      }),
+      home: SafeArea(
+        child: Consumer(builder: (ctx, ref, _) {
+          //la prima pagina visualizzata sarà quella del login
+          var userData = ref.watch(userProfileProvider);
+          if (userData == null) {
+            //
+            //Pagina visualizzata all'avvio dell'applicazione
+            return const MyHomePage(title: "Hello");
+            //return const LoginPage();
+          } else {
+            return Navigator(
+                onGenerateInitialRoutes: (navigator, initialRoute) => [
+                      MaterialPageRoute(
+                          builder: (ctx) =>
+                              MyHomePage(title: "Profilo ${userData.username}"))
+                    ]);
+          }
+        }),
+      ),
       //const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
