@@ -33,16 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        centerTitle: true,
-        title: const Text(
-          "Welcome",
-          style: TextStyle(fontSize: 40, color: color3),
-        ),
-      ),
-      */
       body: Stack(
         fit: StackFit.expand,
         children: [

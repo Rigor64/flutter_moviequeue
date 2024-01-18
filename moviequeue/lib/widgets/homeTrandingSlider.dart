@@ -25,7 +25,16 @@ class homeTrandingSlider extends StatelessWidget {
               autoPlayAnimationDuration:
                   const Duration(seconds: 1) //durata dell'animazione
               ),
-          itemBuilder: (context, itemIndex, pageViewIndex) {
+          itemBuilder: (context, index, pageViewIndex) {
+            String titolo = "None";
+            String release = "None";
+            if (snapshot.data![index].type == "movie") {
+              titolo = snapshot.data![index].title;
+              release = snapshot.data![index].releaseDateFilm;
+            } else {
+              titolo = snapshot.data![index].name;
+              release = snapshot.data![index].releaseDateTVSeries;
+            }
             return GestureDetector(
               //riconoscere un input a schermo
               onTap: () {
@@ -33,8 +42,10 @@ class homeTrandingSlider extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => DetailScreen(
-                          media: snapshot.data[
-                              itemIndex]), //passare al detail screen le informazioni riguardante il media corrispondente
+                        media: snapshot.data[index],
+                        titolo: titolo,
+                        release: release,
+                      ), //passare al detail screen le informazioni riguardante il media corrispondente
                     ));
               },
               child: ClipRRect(
@@ -45,7 +56,7 @@ class homeTrandingSlider extends StatelessWidget {
                   child: Image.network(
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,
-                      '${Vars.imagePath}${snapshot.data![itemIndex].posterPath}'),
+                      '${Vars.imagePath}${snapshot.data![index].posterPath}'),
                 ),
               ),
             );

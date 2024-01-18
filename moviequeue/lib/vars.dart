@@ -9,6 +9,11 @@ const color5 = Color.fromARGB(255, 255, 255, 255);
 
 class Vars {
   static const apiKey = '89e710f6bd1bb53b262612a8e4a2dafc'; //TMDB API
+  var headers = {
+    'accept': 'application/json',
+    'Authorization':
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OWU3MTBmNmJkMWJiNTNiMjYyNjEyYThlNGEyZGFmYyIsInN1YiI6IjY1YTExZDMyZGI0ZWQ2MDEzMjVmOTFkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.VeYpxC5lcslngtEmcJEL0K6oA2OKvytwxudBKA-N1kM'
+  };
   static const imagePath =
       'https://image.tmdb.org/t/p/w500'; //percorso per avere le locandine dei media
 }

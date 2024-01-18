@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:moviequeue/pages/detailScreen.dart';
 import 'package:moviequeue/vars.dart';
 
-class homeSlider extends StatelessWidget {
-  homeSlider({
+class movieSlider extends StatelessWidget {
+  //widget per la visualizzazione del carosello dei film
+  movieSlider({
     super.key,
     required this.snapshot,
   });
@@ -18,6 +19,9 @@ class homeSlider extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
+          String titolo = snapshot.data![index].title;
+          String release = snapshot.data![index].releaseDateFilm;
+
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
@@ -25,9 +29,12 @@ class homeSlider extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
+                      //passare al detail screen le informazioni riguardante il media corrispondente
                       builder: (context) => DetailScreen(
-                          media: snapshot.data[
-                              index]), //passare al detail screen le informazioni riguardante il media corrispondente
+                        media: snapshot.data[index],
+                        titolo: titolo,
+                        release: release,
+                      ),
                     ));
               },
               child: ClipRRect(

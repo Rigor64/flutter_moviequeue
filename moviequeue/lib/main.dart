@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Movie Queue',
       theme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(0, 236, 4, 4),

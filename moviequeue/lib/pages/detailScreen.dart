@@ -5,7 +5,13 @@ import 'package:moviequeue/vars.dart';
 
 class DetailScreen extends StatelessWidget {
   final Media media;
-  const DetailScreen({super.key, required this.media});
+  final String titolo;
+  final String release;
+  const DetailScreen(
+      {super.key,
+      required this.media,
+      required this.titolo,
+      required this.release});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +20,25 @@ class DetailScreen extends StatelessWidget {
         children: [
           ..._buildBackgorund(context, media),
           Positioned(
-            bottom: 220,
+            bottom: 200,
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
+                  Text(
+                    textAlign: TextAlign.center,
+                    titolo,
+                    softWrap: true,
+                    style: const TextStyle(
+                        color: color5,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800),
+                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -30,52 +48,46 @@ class DetailScreen extends StatelessWidget {
                             height: 200,
                             width: 150,
                             child: Image.network(
-                                filterQuality: FilterQuality.high,
-                                fit: BoxFit.cover,
-                                '${Vars.imagePath}${media.backDropPath}'),
+                              filterQuality: FilterQuality.high,
+                              fit: BoxFit.cover,
+                              '${Vars.imagePath}${media.backDropPath}',
+                            ),
                           ),
                         ),
                       ),
                       Column(
-                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              media.title,
-                              style: const TextStyle(
-                                  color: color5,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700),
+                          InkWell(
+                            onTap: () {},
+                            child: Icon(
+                              media.isFavourite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 50.0,
+                              color: media.isFavourite ? color3 : color4,
                             ),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            media.releaseDate,
-                            style: const TextStyle(color: color5, fontSize: 20),
+                            release,
+                            style: const TextStyle(color: color5, fontSize: 18),
                           ),
                           const SizedBox(height: 10),
-                          RatingBar.builder(
-                            initialRating: 3.5,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            ignoreGestures: true,
-                            itemCount: 5,
-                            itemSize: 20,
-                            unratedColor: color4,
-                            itemPadding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
+                          RatingBarIndicator(
                             itemBuilder: (context, index) {
                               return const Icon(
                                 Icons.star,
                                 color: color3,
                               );
                             },
-                            onRatingUpdate: (rated) {
-                              rated = media.voteAvarage;
-                            },
+                            rating: media.voteAverage / 2,
+                            direction: Axis.horizontal,
+                            itemSize: 20,
+                            itemCount: 5,
+                            unratedColor: color4,
                           ),
                           const SizedBox(height: 15),
                         ],
@@ -84,10 +96,7 @@ class DetailScreen extends StatelessWidget {
                   ),
                   Text(
                     media.overview,
-                    style: const TextStyle(
-                      color: color5,
-                      fontSize: 15,
-                    ),
+                    style: const TextStyle(color: color5, fontSize: 15),
                   ),
                 ],
               ),
@@ -124,3 +133,21 @@ class DetailScreen extends StatelessWidget {
     ];
   }
 }
+
+/*
+Container(
+                            padding: EdgeInsets.all(8),
+                            child: Expanded(
+                              child: Text(
+                                titolo,
+                                maxLines: 3,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    color: color5,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ),
+*/

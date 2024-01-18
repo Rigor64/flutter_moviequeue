@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:moviequeue/models/movies.dart';
+import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
 
 final homePageProvider = Provider((_) => 'MoviePage');
@@ -15,7 +15,7 @@ class MoviePage extends ConsumerStatefulWidget {
 }
 
 class _MoviePageState extends ConsumerState<MoviePage> {
-  late Future<List<Movies>> popularMovies;
+  late Future<List<Media>> popularMovies;
   @override
   void initState() {
     super.initState();

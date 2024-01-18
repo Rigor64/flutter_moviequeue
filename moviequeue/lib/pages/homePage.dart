@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviequeue/api/api.dart';
 import 'package:moviequeue/models/media.dart';
-import 'package:moviequeue/models/movies.dart';
-import 'package:moviequeue/models/series.dart';
 import 'package:moviequeue/pages/searchPage.dart';
 import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
-import 'package:moviequeue/widgets/homeSlider.dart';
 import 'package:moviequeue/widgets/homeTrandingSlider.dart';
+import 'package:moviequeue/widgets/movieSlider.dart';
 import 'package:moviequeue/widgets/navDrawer.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:moviequeue/widgets/tvSeriesSlider.dart';
 
 final homePageProvider = Provider((_) => 'HomePage');
 
@@ -25,8 +24,8 @@ class MyHomePage extends ConsumerStatefulWidget {
 
 class _MyHomePage extends ConsumerState<MyHomePage> {
   late Future<List<Media>> trendingMedia;
-  late Future<List<Movies>> popularMovies;
-  late Future<List<Series>> popularSeries;
+  late Future<List<Media>> popularMovies;
+  late Future<List<Media>> popularSeries;
   @override
   void initState() {
     super.initState();
@@ -42,10 +41,10 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
 
     return Scaffold(
       drawer: const NavDrawer(), //navigation bar right to left
-      backgroundColor: color1,
+      backgroundColor: color2,
       appBar: AppBar(
         //barra in alto
-        toolbarHeight: 60,
+        toolbarHeight: 80,
         backgroundColor: Theme.of(context).colorScheme.background,
         title: const Text(
           "Movie Queue",
@@ -88,7 +87,11 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                   //primo carosello di film e serie tv
                   const Text(
                     "Trending Movies",
-                    style: TextStyle(color: color5, fontSize: 20),
+                    style: TextStyle(
+                      color: color5,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -120,7 +123,11 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                   //secondo carosello
                   const Text(
                     "Top rate movies",
-                    style: TextStyle(color: color5, fontSize: 20),
+                    style: TextStyle(
+                      color: color5,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -136,9 +143,7 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                               child: Text(snapshot.error.toString()),
                             );
                           } else if (snapshot.hasData) {
-                            return homeSlider(
-                              snapshot: snapshot,
-                            );
+                            return movieSlider(snapshot: snapshot);
                           } else {
                             return const Center(
                                 child: CircularProgressIndicator());
@@ -153,7 +158,11 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                   //terzo carosello
                   const Text(
                     "Top rate Tv series",
-                    style: TextStyle(color: color5, fontSize: 20),
+                    style: TextStyle(
+                      color: color5,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -169,7 +178,7 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                               child: Text(snapshot.error.toString()),
                             );
                           } else if (snapshot.hasData) {
-                            return homeSlider(
+                            return tvSeriesSlider(
                               snapshot: snapshot,
                             );
                           } else {
@@ -183,7 +192,7 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
       bottomNavigationBar: AnimatedBottomNavigationBar(
         //barra di navigazione sottostante
         icons: const [Icons.movie, Icons.tv],
-
+        height: 80,
         activeColor: color3,
         activeIndex: _bottomNavIndex,
         gapLocation: GapLocation.center,
