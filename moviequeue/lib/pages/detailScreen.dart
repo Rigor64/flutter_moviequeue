@@ -31,9 +31,17 @@ class DetailScreen extends StatelessWidget {
                     titolo,
                     softWrap: true,
                     style: const TextStyle(
-                        color: color5,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800),
+                      color: color5,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 5.0,
+                          color: Colors.black,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

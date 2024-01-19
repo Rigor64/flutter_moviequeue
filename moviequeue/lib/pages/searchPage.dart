@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/pages/detailScreen.dart';
 import 'package:moviequeue/vars.dart';
 
@@ -37,20 +38,51 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color3,
       appBar: AppBar(
-        title: Text('Cerca'),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        centerTitle: true,
+        toolbarHeight: 70,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: const Icon(Icons.screen_search_desktop_outlined,
+            color: color1, size: 40),
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
             child: TextField(
+              cursorColor: color2,
               controller: _searchController,
+              textInputAction: TextInputAction.search,
+              onSubmitted: (String value) {
+                _searchMovies(_searchController.text);
+              },
               decoration: InputDecoration(
-                labelText: 'Search Movies',
+                labelStyle: const TextStyle(color: color5),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: color5),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: color2),
+                ),
+                labelText: 'Cerca',
+                hintText: 'Inserisci il film da cercare',
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(
+                    Icons.search,
+                    color: color1,
+                    size: 30,
+                  ),
                   onPressed: () {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
                     _searchMovies(_searchController.text);
                   },
                 ),
@@ -61,6 +93,9 @@ class _SearchPageState extends State<SearchPage> {
             child: ListView.builder(
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
+                List<Media> data = _searchResults
+                    .map((series) => Media.fromJson(series))
+                    .toList();
                 final movie = _searchResults[index];
                 return GestureDetector(
                   //riconoscere un input a schermo
@@ -69,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetailScreen(
-                            media: _searchResults[index],
+                            media: data[index],
                             titolo: movie["title"],
                             release: movie["release_date"],
                           ), //passare al detail screen le informazioni riguardante il media corrispondente
@@ -79,17 +114,52 @@ class _SearchPageState extends State<SearchPage> {
                     padding: EdgeInsets.all(10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: SizedBox(
-                        height: 150,
-                        width: double.infinity,
-                        child: ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                              color3, BlendMode.softLight),
-                          child: Image.network(
-                              filterQuality: FilterQuality.high,
-                              fit: BoxFit.cover,
-                              '${Vars.imagePath}${movie["poster_path"]}'),
-                        ),
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            height: 150,
+                            width: double.infinity,
+                            child: ColorFiltered(
+                              colorFilter: const ColorFilter.mode(
+                                  color4, BlendMode.modulate),
+                              child: Image.network(
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.cover,
+                                  '${Vars.imagePath}${movie["poster_path"]}'),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(16),
+                            child: SizedBox(
+                              height: 120,
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: OverflowBox(
+                                  maxHeight: double.infinity,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    movie["title"],
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w900,
+                                      color: color5,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 5.0,
+                                          color: Colors.black,
+                                          offset: Offset(2.0, 2.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
@@ -102,35 +172,3 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-
-/*
-String titolo = _searchResults[index];
-                String release = _searchResults[index].releaseDateFilm;
-
-                final movie = _searchResults[index];
-                return GestureDetector(
-                  //riconoscere un input a schermo
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailScreen(
-                            media: _searchResults[index],
-                            titolo: titolo,
-                            release: release,
-                          ), //passare al detail screen le informazioni riguardante il media corrispondente
-                        ));
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      height: 300,
-                      width: 200,
-                      child: Image.network(
-                          filterQuality: FilterQuality.high,
-                          fit: BoxFit.cover,
-                          '${Vars.imagePath}${_searchResults[index].posterPath}'),
-                    ),
-                  ),
-                );
-                */
