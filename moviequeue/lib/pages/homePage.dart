@@ -1,9 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:moviequeue/api/api.dart';
 import 'package:moviequeue/models/media.dart';
+import 'package:moviequeue/pages/bookmarkPage.dart';
+import 'package:moviequeue/pages/moviePage.dart';
 import 'package:moviequeue/pages/searchPage.dart';
+import 'package:moviequeue/pages/seriesPage.dart';
 import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
 import 'package:moviequeue/widgets/homeTrandingSlider.dart';
@@ -40,7 +44,7 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
     debugPrint("Building $this");
 
     return Scaffold(
-      drawer: const NavDrawer(), //navigation bar right to left
+      //drawer: const NavDrawer(), //navigation bar right to left
       backgroundColor: color2,
       appBar: AppBar(
         //barra in alto
@@ -69,140 +73,156 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
               )),
         ],
       ),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          Center(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //
-                        //primo carosello di film e serie tv
-                        const Text(
-                          "Trending Movies",
-                          style: TextStyle(
-                            color: color5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                          child: FutureBuilder(
-                              future: trendingMedia,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  debugPrint(snapshot.error.toString());
-                                  return Center(
-                                    child: Text(snapshot.error.toString()),
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return homeTrandingSlider(
-                                    snapshot: snapshot,
-                                  );
-                                } else {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              }),
-                        ),
-                        //
-                        const SizedBox(height: 20),
-                        //
-                        //secondo carosello
-                        const Text(
-                          "Top rate movies",
-                          style: TextStyle(
-                            color: color5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        //
-                        SizedBox(
-                          //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                          child: FutureBuilder(
-                              future: popularMovies,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  debugPrint(snapshot.error.toString());
-                                  return Center(
-                                    child: Text(snapshot.error.toString()),
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return movieSlider(snapshot: snapshot);
-                                } else {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              }),
-                        ),
-                        //
-                        const SizedBox(height: 20),
-                        //
-                        //terzo carosello
-                        const Text(
-                          "Top rate Tv series",
-                          style: TextStyle(
-                            color: color5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                          child: FutureBuilder(
-                              future: popularSeries,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  debugPrint(snapshot.error.toString());
-                                  return Center(
-                                    child: Text(snapshot.error.toString()),
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return tvSeriesSlider(
-                                    snapshot: snapshot,
-                                  );
-                                } else {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                              }),
-                        ),
-                      ])),
-            ),
-          ),
-          const SearchPage(),
-        ],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        index: 0,
-        height: 60,
-        backgroundColor: color2,
-        animationDuration: const Duration(milliseconds: 300),
-        buttonBackgroundColor: color3,
-        onTap: (index) {
-          setState(() {
-            _pageController.jumpToPage(index);
-          });
-        },
-        items: const [
-          Icon(Icons.home_rounded, size: 30),
-          Icon(Icons.movie, size: 30),
-          Icon(Icons.tv, size: 30),
-          Icon(Icons.search_outlined, size: 30),
-          Icon(Icons.star_rounded, size: 30),
-        ],
+      body: ValueListenableBuilder(
+          valueListenable: Hive.box("favorites").listenable(),
+          builder: (context, box, child) {
+            return PageView(
+              reverse: true,
+              controller: _pageController,
+              children: [
+                Center(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //
+                              //primo carosello di film e serie tv
+                              const Text(
+                                "Trending Movies",
+                                style: TextStyle(
+                                  color: color5,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                child: FutureBuilder(
+                                    future: trendingMedia,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        debugPrint(snapshot.error.toString());
+                                        return Center(
+                                          child:
+                                              Text(snapshot.error.toString()),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return homeTrandingSlider(
+                                          snapshot: snapshot,
+                                        );
+                                      } else {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                    }),
+                              ),
+                              //
+                              const SizedBox(height: 20),
+                              //
+                              //secondo carosello
+                              const Text(
+                                "Top rate movies",
+                                style: TextStyle(
+                                  color: color5,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              //
+                              SizedBox(
+                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                child: FutureBuilder(
+                                    future: popularMovies,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        debugPrint(snapshot.error.toString());
+                                        return Center(
+                                          child:
+                                              Text(snapshot.error.toString()),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return movieSlider(snapshot: snapshot);
+                                      } else {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                    }),
+                              ),
+                              //
+                              const SizedBox(height: 20),
+                              //
+                              //terzo carosello
+                              const Text(
+                                "Top rate Tv series",
+                                style: TextStyle(
+                                  color: color5,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                child: FutureBuilder(
+                                    future: popularSeries,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        debugPrint(snapshot.error.toString());
+                                        return Center(
+                                          child:
+                                              Text(snapshot.error.toString()),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return tvSeriesSlider(
+                                          snapshot: snapshot,
+                                        );
+                                      } else {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                    }),
+                              ),
+                            ])),
+                  ),
+                ),
+
+                //altre pagine navigabili attraverso il bottom navigator
+                const MoviePage(),
+                const SeriesPage(),
+                const SearchPage(),
+                const BookmarkPage()
+              ],
+            );
+          }),
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+        child: CurvedNavigationBar(
+          index: 0,
+          height: 60,
+          backgroundColor: color2,
+          animationDuration: const Duration(milliseconds: 300),
+          buttonBackgroundColor: color3,
+          onTap: (index) {
+            setState(() {
+              _pageController.jumpToPage(index);
+            });
+          },
+          items: const [
+            Icon(Icons.home_rounded, size: 30),
+            Icon(Icons.movie, size: 30),
+            Icon(Icons.tv, size: 30),
+            Icon(Icons.search_outlined, size: 30),
+            Icon(Icons.star_rounded, size: 30),
+          ],
+        ),
       ),
     );
   }

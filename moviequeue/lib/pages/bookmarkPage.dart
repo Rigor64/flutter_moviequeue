@@ -4,17 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
 
-final homePageProvider = Provider((_) => 'MoviePage');
+final homePageProvider = Provider((_) => 'BookmarkPage');
 
-class MoviePage extends ConsumerStatefulWidget {
+class BookmarkPage extends ConsumerStatefulWidget {
   //tipologia di cunsumer widget che può alterare il proprio stato
-  const MoviePage({super.key});
+  const BookmarkPage({super.key});
 
   @override
-  ConsumerState<MoviePage> createState() => _MoviePageState();
+  ConsumerState<BookmarkPage> createState() => _BookmarkPageState();
 }
 
-class _MoviePageState extends ConsumerState<MoviePage> {
+class _BookmarkPageState extends ConsumerState<BookmarkPage> {
   late Future<List<Media>> popularMovies;
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _MoviePageState extends ConsumerState<MoviePage> {
     debugPrint("Building $this");
 
     return const Scaffold(
-      backgroundColor: color2,
+      backgroundColor: color1,
       body: SizedBox(),
     );
   }

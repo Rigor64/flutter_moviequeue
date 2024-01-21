@@ -14,6 +14,8 @@ dependencies:
   flutter_riverpod: ^2.4.9
   uuid: ^4.2.1
   http: ^1.1.0
+  path_provider: ^2.0.7
+  hive_flutter: ^1.1.0
 
   #UI
   animated_bottom_navigation_bar: ^1.2.0

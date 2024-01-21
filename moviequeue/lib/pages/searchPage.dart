@@ -38,44 +38,29 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: color3,
-      appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
-        centerTitle: true,
-        toolbarHeight: 70,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Icon(Icons.screen_search_desktop_outlined,
-            color: color1, size: 40),
-      ),
+      backgroundColor: color2,
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
             child: TextField(
-              cursorColor: color2,
+              textAlign: TextAlign.center,
+              cursorColor: color3,
               controller: _searchController,
               textInputAction: TextInputAction.search,
               onSubmitted: (String value) {
                 _searchMovies(_searchController.text);
               },
               decoration: InputDecoration(
-                labelStyle: const TextStyle(color: color5),
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: color5),
-                ),
                 focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: color2),
+                  borderSide: BorderSide(color: color3),
                 ),
-                labelText: 'Cerca',
                 hintText: 'Inserisci il film da cercare',
+                hintStyle: const TextStyle(color: color5),
                 suffixIcon: IconButton(
                   icon: const Icon(
-                    Icons.search,
-                    color: color1,
+                    Icons.screen_search_desktop_outlined,
+                    color: color5,
                     size: 30,
                   ),
                   onPressed: () {
@@ -87,6 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 ),
               ),
+              style: TextStyle(color: color5, fontSize: 20),
             ),
           ),
           Expanded(
