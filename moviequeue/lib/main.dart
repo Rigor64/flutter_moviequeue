@@ -3,20 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/pages/homepage.dart';
 import 'package:moviequeue/pages/loginPage.dart';
 import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //apriamo il database
   await Hive.initFlutter();
-  //carichiamo una scatola di Hive
-  await Hive.openBox("favorites");
+  Hive.registerAdapter(MediaAdapter());
+
+  await Hive.openBox<Media>("favorites");
 
   runApp(const ProviderScope(child: MyApp()));
 
-  WidgetsFlutterBinding.ensureInitialized();
   //opzioni di visualizzazione del UI del telefono
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 }
@@ -50,8 +52,8 @@ class MyApp extends StatelessWidget {
           if (userData == null) {
             //
             //Pagina visualizzata all'avvio dell'applicazione
-            //return const MyHomePage(title: "Hello");
-            return const LoginPage();
+            return const MyHomePage(title: "Hello");
+            //return const LoginPage();
           } else {
             return Navigator(
                 onGenerateInitialRoutes: (navigator, initialRoute) => [

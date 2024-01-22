@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:moviequeue/api/api.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/pages/detailScreen.dart';
 import 'package:moviequeue/vars.dart';
@@ -14,14 +15,15 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController _searchController = TextEditingController();
   List<dynamic> _searchResults = [];
+  int selectedButtonIndex = 0; // Indice del pulsante selezionato di default
 
   void _searchMovies(String query) async {
     const String apiKey = Vars.apiKey;
-    const String baseUrl = 'https://api.themoviedb.org/3/search/movie';
+    const String baseUrl = Api.searchUrl;
     const String language = 'it-IT';
 
     final Uri uri = Uri.parse(
-      '$baseUrl?api_key=$apiKey&language=$language&query=$query',
+      '$baseUrl?query=$query&api_key=$apiKey&language=$language',
     );
     final response = await http.get(uri);
     if (response.statusCode == 200) {
@@ -79,10 +81,18 @@ class _SearchPageState extends State<SearchPage> {
             child: ListView.builder(
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
+                String titolo = "None";
+                String release = "None";
                 List<Media> data = _searchResults
                     .map((series) => Media.fromJson(series))
                     .toList();
-                final movie = _searchResults[index];
+                if (data[index].type == "movie") {
+                  titolo = data[index].title;
+                  release = data[index].releaseDateFilm;
+                } else {
+                  titolo = data[index].name;
+                  release = data[index].releaseDateTVSeries;
+                }
                 return GestureDetector(
                   //riconoscere un input a schermo
                   onTap: () {
@@ -91,8 +101,8 @@ class _SearchPageState extends State<SearchPage> {
                         MaterialPageRoute(
                           builder: (context) => DetailScreen(
                             media: data[index],
-                            titolo: movie["title"],
-                            release: movie["release_date"],
+                            titolo: data[index].title,
+                            release: data[index].releaseDateFilm,
                           ), //passare al detail screen le informazioni riguardante il media corrispondente
                         ));
                   },
@@ -111,7 +121,7 @@ class _SearchPageState extends State<SearchPage> {
                               child: Image.network(
                                   filterQuality: FilterQuality.high,
                                   fit: BoxFit.cover,
-                                  '${Vars.imagePath}${movie["poster_path"]}'),
+                                  '${Vars.imagePath}${data[index].posterPath}'),
                             ),
                           ),
                           Padding(
@@ -124,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                                   maxHeight: double.infinity,
                                   alignment: Alignment.bottomCenter,
                                   child: Text(
-                                    movie["title"],
+                                    data[index].title,
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,

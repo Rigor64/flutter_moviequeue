@@ -15,8 +15,6 @@ import 'package:moviequeue/widgets/movieSlider.dart';
 import 'package:moviequeue/widgets/navDrawer.dart';
 import 'package:moviequeue/widgets/tvSeriesSlider.dart';
 
-final homePageProvider = Provider((_) => 'HomePage');
-
 class MyHomePage extends ConsumerStatefulWidget {
   //tipologia di cunsumer widget che può alterare il proprio stato
   final String title;
@@ -74,10 +72,10 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
         ],
       ),
       body: ValueListenableBuilder(
-          valueListenable: Hive.box("favorites").listenable(),
+          valueListenable: Hive.box<Media>("favorites").listenable(),
           builder: (context, box, child) {
             return PageView(
-              reverse: true,
+              physics: const NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: [
                 Center(

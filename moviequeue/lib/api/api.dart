@@ -19,6 +19,8 @@ class Api {
   static const _popularSeriesUrl =
       'https://api.themoviedb.org/3/trending/tv/day?language=it-IT';
 
+  static const searchUrl = 'https://api.themoviedb.org/3/search/movie';
+
   Future<List<Media>> getTrendingMedia() async {
     //status code che identifica se la comunicazione sta avvenendo
     //funzione asincrona per far lavorare le varie parti non contemporaneamente

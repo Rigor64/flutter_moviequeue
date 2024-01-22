@@ -26,7 +26,7 @@ class DetailScreen extends StatelessWidget {
     //
     return Scaffold(
       body: ValueListenableBuilder(
-          valueListenable: Hive.box("favorites").listenable(),
+          valueListenable: Hive.box<Media>("favorites").listenable(),
           builder: (context, box, child) {
             //cerchiamo se il titolo è stato aggiumto ai preferiti
             final isFavourite = box.get(media.id) != null;
@@ -35,7 +35,7 @@ class DetailScreen extends StatelessWidget {
               children: [
                 ..._buildBackground(context, media),
                 Positioned(
-                  bottom: 200,
+                  top: 200,
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -47,7 +47,7 @@ class DetailScreen extends StatelessWidget {
                           softWrap: true,
                           style: const TextStyle(
                             color: color5,
-                            fontSize: 30,
+                            fontSize: 35,
                             fontWeight: FontWeight.w800,
                             shadows: [
                               Shadow(
@@ -68,8 +68,8 @@ class DetailScreen extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: SizedBox(
-                                  height: 200,
-                                  width: 150,
+                                  height: 250,
+                                  width: 180,
                                   child: Image.network(
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.cover,
@@ -101,7 +101,7 @@ class DetailScreen extends StatelessWidget {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackbar);
                                     } else {
-                                      await box.put(media.id, media.title);
+                                      await box.put(media.id, media);
                                       const snackbar = SnackBar(
                                         content: Text(
                                           'Preferito aggiunto con successo',
@@ -119,14 +119,14 @@ class DetailScreen extends StatelessWidget {
                                         ? Icons.favorite
                                         : Icons.favorite_border,
                                     size: 50.0,
-                                    color: isFavourite ? color3 : color4,
+                                    color: isFavourite ? color3 : color3,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   release,
                                   style: const TextStyle(
-                                      color: color5, fontSize: 18),
+                                      color: color5, fontSize: 25),
                                 ),
                                 const SizedBox(height: 10),
                                 RatingBarIndicator(
@@ -142,15 +142,23 @@ class DetailScreen extends StatelessWidget {
                                   itemCount: 5,
                                   unratedColor: color4,
                                 ),
-                                const SizedBox(height: 15),
                               ],
                             ),
                           ],
                         ),
-                        Text(
-                          media.overview,
-                          style: const TextStyle(color: color5, fontSize: 15),
+                        SizedBox(
+                          height: 400,
+                          child: OverflowBox(
+                            child: Text(
+                              media.overview,
+                              maxLines: 10,
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  const TextStyle(color: color5, fontSize: 20),
+                            ),
+                          ),
                         ),
+                        const SizedBox(height: 20)
                       ],
                     ),
                   ),
@@ -158,6 +166,21 @@ class DetailScreen extends StatelessWidget {
               ],
             );
           }),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Torna alla pagina precedente
+            },
+            tooltip: 'Torna indietro',
+            backgroundColor: color3,
+            foregroundColor: color5,
+            child: const Icon(Icons.arrow_back),
+          ),
+        ),
+      ),
     );
   }
 
