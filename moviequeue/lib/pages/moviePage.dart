@@ -237,8 +237,8 @@ class _MoviePageState extends ConsumerState<MoviePage> {
                         ],
                       ),
                       SizedBox(
-                        height: 300,
-                        width: 220,
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        width: MediaQuery.of(context).size.height * 0.6,
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.only(

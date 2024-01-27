@@ -173,143 +173,147 @@ class DetailScreen extends StatelessWidget {
                 return Stack(
                   children: [
                     ..._buildBackground(context, media),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(children: [
-                              Text(
-                                textAlign: TextAlign.center,
-                                titolo,
-                                softWrap: true,
-                                style: const TextStyle(
-                                  color: color5,
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.w800,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 5.0,
-                                      color: Colors.black,
-                                      offset: Offset(2.0, 2.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              SizedBox(
-                                width: 550,
-                                height: 320,
-                                child: OverflowBox(
-                                  child: Text(
-                                    media.overview,
-                                    maxLines: 14,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: color5,
-                                      fontSize: 20,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 5.0,
-                                          color: Colors.black,
-                                          offset: Offset(2.0, 2.0),
-                                        ),
-                                      ],
-                                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(children: [
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  titolo,
+                                  softWrap: true,
+                                  style: const TextStyle(
+                                    color: color5,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w800,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 5.0,
+                                        color: Colors.black,
+                                        offset: Offset(2.0, 2.0),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ]),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  //icona del cuore per aggiungere ai preferiti
-                                  onTap: () async {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    if (isFavourite) {
-                                      await box.delete(media.id);
-                                      const snackbar = SnackBar(
-                                        content: Text(
-                                          'Preferito rimosso con successo',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        backgroundColor: color3,
-                                      );
-
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackbar);
-                                    } else {
-                                      await box.put(media.id, media);
-                                      const snackbar = SnackBar(
-                                        content: Text(
-                                          'Preferito aggiunto con successo',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        backgroundColor: color3,
-                                      );
-
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackbar);
-                                    }
-                                  },
-                                  child: Icon(
-                                    isFavourite
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    size: 50.0,
-                                    color: isFavourite ? color3 : color3,
-                                  ),
+                                const SizedBox(
+                                  height: 16,
                                 ),
-                                const SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: SizedBox(
-                                      height: 200,
-                                      width: 150,
-                                      child: Image.network(
-                                        filterQuality: FilterQuality.high,
-                                        fit: BoxFit.cover,
-                                        '${Vars.imagePath}${media.backDropPath}',
+                                SizedBox(
+                                  width: 550,
+                                  height: 320,
+                                  child: OverflowBox(
+                                    child: Text(
+                                      media.overview,
+                                      maxLines: 14,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: color5,
+                                        fontSize: 20,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 5.0,
+                                            color: Colors.black,
+                                            offset: Offset(2.0, 2.0),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  release,
-                                  style: const TextStyle(
-                                      color: color5, fontSize: 25),
-                                ),
-                                const SizedBox(height: 10),
-                                RatingBarIndicator(
-                                  itemBuilder: (context, index) {
-                                    return const Icon(
-                                      Icons.star,
-                                      color: color3,
-                                    );
-                                  },
-                                  rating: media.voteAverage / 2,
-                                  direction: Axis.horizontal,
-                                  itemSize: 20,
-                                  itemCount: 5,
-                                  unratedColor: color4,
-                                ),
-                              ],
-                            ),
-                          ],
+                              ]),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    //icona del cuore per aggiungere ai preferiti
+                                    onTap: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                      if (isFavourite) {
+                                        await box.delete(media.id);
+                                        const snackbar = SnackBar(
+                                          content: Text(
+                                            'Preferito rimosso con successo',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          backgroundColor: color3,
+                                        );
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar);
+                                      } else {
+                                        await box.put(media.id, media);
+                                        const snackbar = SnackBar(
+                                          content: Text(
+                                            'Preferito aggiunto con successo',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          backgroundColor: color3,
+                                        );
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar);
+                                      }
+                                    },
+                                    child: Icon(
+                                      isFavourite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: 50.0,
+                                      color: isFavourite ? color3 : color3,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: SizedBox(
+                                        height: 200,
+                                        width: 150,
+                                        child: Image.network(
+                                          filterQuality: FilterQuality.high,
+                                          fit: BoxFit.cover,
+                                          '${Vars.imagePath}${media.backDropPath}',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    release,
+                                    style: const TextStyle(
+                                        color: color5, fontSize: 25),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  RatingBarIndicator(
+                                    itemBuilder: (context, index) {
+                                      return const Icon(
+                                        Icons.star,
+                                        color: color3,
+                                      );
+                                    },
+                                    rating: media.voteAverage / 2,
+                                    direction: Axis.horizontal,
+                                    itemSize: 20,
+                                    itemCount: 5,
+                                    unratedColor: color4,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     )
                   ],
                 );

@@ -68,13 +68,6 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
           ],
         ),
         centerTitle: true,
-        /*const Text(
-          "Movie Queue",
-          style: TextStyle(fontWeight: FontWeight.w800),
-          textAlign: TextAlign.center,
-        ),
-        centerTitle: true,
-        */
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
@@ -89,7 +82,7 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                       Navigator.push(context, animationAccountPage()),
                     },
                 icon: const Icon(
-                  Icons.account_box_rounded,
+                  Icons.account_circle_rounded,
                   color: color3,
                   size: 40,
                 )),

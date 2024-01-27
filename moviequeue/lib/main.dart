@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moviequeue/models/media.dart';
-import 'package:moviequeue/pages/homepage.dart';
 import 'package:moviequeue/pages/loginPage.dart';
-import 'package:moviequeue/providers.dart';
 import 'package:moviequeue/vars.dart';
 
 Future<void> main() async {
@@ -48,20 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       home: SafeArea(
         child: Consumer(builder: (ctx, ref, _) {
-          //la prima pagina visualizzata sarà quella del login
-          var userData = ref.watch(userProfileProvider);
-          if (userData == null) {
-            //
-            //Pagina visualizzata all'avvio dell'applicazione
-            //return const MyHomePage(title: "Hello");
-            return const LoginPage();
-          } else {
-            return Navigator(
-                onGenerateInitialRoutes: (navigator, initialRoute) => [
-                      MaterialPageRoute(
-                          builder: (ctx) => const MyHomePage(title: "Homepage"))
-                    ]);
-          }
+          return const LoginPage();
         }),
       ),
     );

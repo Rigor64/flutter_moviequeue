@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:moviequeue/providers.dart';
+import 'package:moviequeue/pages/homePage.dart';
+import 'package:moviequeue/pages/singupPage.dart';
 import 'package:moviequeue/vars.dart';
 
 class LoginPage extends StatefulWidget {
@@ -72,6 +73,20 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ));
     } else {
+      const snackbar1 = SnackBar(
+        content: Text(
+          'Login o password non valida, si prega di riprovare',
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: color3,
+      );
+      const snackbar2 = SnackBar(
+        content: Text(
+          'Bentornato',
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: color3,
+      );
       return Scaffold(
         body: ValueListenableBuilder(
             valueListenable: Hive.box("account").listenable(),
@@ -180,44 +195,57 @@ class _LoginPageState extends State<LoginPage> {
                                             fontSize: 18,
                                             fontWeight: FontWeight.w800)),
                                     onPressed: () async {
-                                      /*
-                                          String username = box.get(1) ?? "";
-                                          String password = box.get(2) ?? "";
-                                          ScaffoldMessenger.of(context)
-                                              .clearSnackBars();
-                                          const snackbar = SnackBar(
-                                            content: Text(
-                                              'Login o password non valida, si prega di riprovare',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            backgroundColor: color3,
-                                          );
-                                          if (username != "") {
-                                            if (password != "") {
-                                              await box.put(
-                                                  1, _ctrlUsername!.text);
-                                              await box.put(
-                                                  2, _ctrlPassword!.text);
-                                              debugPrint(box.get(1));
+                                      //prendiamo dal database i valori corrispondenti
+                                      String username = box.get(1) ?? "";
+                                      String password = box.get(2) ?? "";
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
 
-                                              debugPrint(box.get(2));
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(snackbar);
-                                            }
-                                          }
-                                          */
-                                      if (!ref
-                                          .read(userProfileProvider.notifier)
-                                          .login(_ctrlUsername!.text,
-                                              _ctrlPassword!.text)) {
+                                      if (username != "" && password != "") {
+                                        if (_ctrlUsername!.text == username &&
+                                            _ctrlPassword!.text == password) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar2);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MyHomePage(
+                                                        title: "Homepage")),
+                                          );
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar1);
+                                        }
+                                      } else {
                                         ScaffoldMessenger.of(context)
-                                          ..clearSnackBars()
-                                          ..showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "Login o password non valida, si prega di riprovare")));
+                                            .showSnackBar(snackbar1);
                                       }
-                                    }))
+                                    })),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            SizedBox(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SingupPage()),
+                                  );
+                                },
+                                child: const Text(
+                                  "Non hai ancora un account?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: color2,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

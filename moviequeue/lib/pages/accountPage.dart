@@ -1,30 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
-  //final Media media;
-
-  //const DetailScreen( {super.key,required this.media,});
-
   @override
   Widget build(BuildContext context) {
-    // leggo la mappa presente sul file
-    //Map<String, dynamic> preferiti = BookMark().readFromFile() as Map<String, dynamic>;
-    //
     return Scaffold(
+      backgroundColor: color3,
       body: ValueListenableBuilder(
-          valueListenable: Hive.box<Media>("account")
+          valueListenable: Hive.box("account")
               .listenable(), // preleviamo le informazioni contenute della box account
           builder: (context, box, child) {
-            return const Stack(children: [
-              SizedBox(
-                height: 10,
-              ),
-            ]);
+            String username = box.get(1);
+            String password = box.get(2);
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('images/avatar.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Nome: $username",
+                      softWrap: true,
+                      style: const TextStyle(
+                        color: color5,
+                        fontSize: 35,
+                        fontWeight: FontWeight.w800,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 5.0,
+                            color: Colors.black,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      "Password: $password",
+                      softWrap: true,
+                      style: const TextStyle(
+                        color: color5,
+                        fontSize: 35,
+                        fontWeight: FontWeight.w800,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 5.0,
+                            color: Colors.black,
+                            offset: Offset(2.0, 2.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
           }),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),

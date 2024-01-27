@@ -231,8 +231,8 @@ class _SeriesPageState extends ConsumerState<SeriesPage> {
                         ],
                       ),
                       SizedBox(
-                        height: 300,
-                        width: 220,
+                        height: MediaQuery.of(context).size.height * 0.75,
+                        width: MediaQuery.of(context).size.height * 0.55,
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.only(
