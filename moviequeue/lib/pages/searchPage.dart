@@ -13,7 +13,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<dynamic> _searchResults = [];
   int selectedButtonIndex = 0; // Indice del pulsante selezionato di default
 
@@ -33,7 +33,7 @@ class _SearchPageState extends State<SearchPage> {
       });
     } else {
       // Handle error
-      print('Error: ${response.statusCode}');
+      debugPrint('Error: ${response.statusCode}');
     }
   }
 
@@ -74,7 +74,7 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 ),
               ),
-              style: TextStyle(color: color5, fontSize: 20),
+              style: const TextStyle(color: color5, fontSize: 20),
             ),
           ),
           Expanded(
@@ -87,8 +87,8 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisSpacing: 20),
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
-                String titolo = "None";
-                String release = "None";
+                String titolo = "";
+                String release = "";
                 List<Media> data = _searchResults
                     .map((series) => Media.fromJson(series))
                     .toList();
@@ -99,7 +99,7 @@ class _SearchPageState extends State<SearchPage> {
                   titolo = data[index].name;
                   release = data[index].releaseDateTVSeries;
                 }
-                return Container(
+                return SizedBox(
                   height: 150,
                   child: GestureDetector(
                     //riconoscere un input a schermo

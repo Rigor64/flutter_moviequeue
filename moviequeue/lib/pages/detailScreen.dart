@@ -17,67 +17,218 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // leggo la mappa presente sul file
-    //Map<String, dynamic> preferiti = BookMark().readFromFile() as Map<String, dynamic>;
-    //
     return Scaffold(
-      body: ValueListenableBuilder(
-          valueListenable: Hive.box<Media>("favorites").listenable(),
-          builder: (context, box, child) {
-            //cerchiamo se il titolo è stato aggiumto ai preferiti
-            final isFavourite = box.get(media.id) != null;
-            //
-            return Stack(
-              children: [
-                ..._buildBackground(context, media),
-                Positioned(
-                  top: 200,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text(
-                          textAlign: TextAlign.center,
-                          titolo,
-                          softWrap: true,
-                          style: const TextStyle(
-                            color: color5,
-                            fontSize: 35,
-                            fontWeight: FontWeight.w800,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 5.0,
-                                color: Colors.black,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+      body: OrientationBuilder(builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return ValueListenableBuilder(
+              // leggo la mappa presente sul file
+              //
+              valueListenable: Hive.box<Media>("favorites").listenable(),
+              builder: (context, box, child) {
+                //cerchiamo se il titolo è stato aggiumto ai preferiti
+                final isFavourite = box.get(media.id) != null;
+                //
+                return Stack(
+                  children: [
+                    ..._buildBackground(context, media),
+                    Positioned(
+                      top: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: SizedBox(
-                                  height: 250,
-                                  width: 180,
-                                  child: Image.network(
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.cover,
-                                    '${Vars.imagePath}${media.backDropPath}',
+                            Text(
+                              textAlign: TextAlign.center,
+                              titolo,
+                              softWrap: true,
+                              style: const TextStyle(
+                                color: color5,
+                                fontSize: 35,
+                                fontWeight: FontWeight.w800,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 5.0,
+                                    color: Colors.black,
+                                    offset: Offset(2.0, 2.0),
                                   ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: SizedBox(
+                                      height: 250,
+                                      width: 180,
+                                      child: Image.network(
+                                        filterQuality: FilterQuality.high,
+                                        fit: BoxFit.cover,
+                                        '${Vars.imagePath}${media.backDropPath}',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      //icona del cuore per aggiungere ai preferiti
+                                      onTap: () async {
+                                        ScaffoldMessenger.of(context)
+                                            .clearSnackBars();
+                                        if (isFavourite) {
+                                          await box.delete(media.id);
+                                          const snackbar = SnackBar(
+                                            content: Text(
+                                              'Preferito rimosso con successo',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            backgroundColor: color3,
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar);
+                                        } else {
+                                          await box.put(media.id, media);
+                                          const snackbar = SnackBar(
+                                            content: Text(
+                                              'Preferito aggiunto con successo',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            backgroundColor: color3,
+                                          );
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar);
+                                        }
+                                      },
+                                      child: Icon(
+                                        isFavourite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        size: 50.0,
+                                        color: isFavourite ? color3 : color3,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      release,
+                                      style: const TextStyle(
+                                          color: color5, fontSize: 25),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    RatingBarIndicator(
+                                      itemBuilder: (context, index) {
+                                        return const Icon(
+                                          Icons.star,
+                                          color: color3,
+                                        );
+                                      },
+                                      rating: media.voteAverage / 2,
+                                      direction: Axis.horizontal,
+                                      itemSize: 20,
+                                      itemCount: 5,
+                                      unratedColor: color4,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 400,
+                              child: OverflowBox(
+                                child: Text(
+                                  media.overview,
+                                  maxLines: 10,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      color: color5, fontSize: 20),
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 20)
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              });
+        } else {
+          return ValueListenableBuilder(
+              valueListenable: Hive.box<Media>("favorites").listenable(),
+              builder: (context, box, child) {
+                //cerchiamo se il titolo è stato aggiumto ai preferiti
+                final isFavourite = box.get(media.id) != null;
+                //
+                return Stack(
+                  children: [
+                    ..._buildBackground(context, media),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(children: [
+                              Text(
+                                textAlign: TextAlign.center,
+                                titolo,
+                                softWrap: true,
+                                style: const TextStyle(
+                                  color: color5,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w800,
+                                  shadows: [
+                                    Shadow(
+                                      blurRadius: 5.0,
+                                      color: Colors.black,
+                                      offset: Offset(2.0, 2.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              SizedBox(
+                                width: 550,
+                                height: 320,
+                                child: OverflowBox(
+                                  child: Text(
+                                    media.overview,
+                                    maxLines: 14,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      color: color5,
+                                      fontSize: 20,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 5.0,
+                                          color: Colors.black,
+                                          offset: Offset(2.0, 2.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]),
+                            const SizedBox(
+                              width: 20,
+                            ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 InkWell(
                                   //icona del cuore per aggiungere ai preferiti
@@ -119,6 +270,22 @@ class DetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: SizedBox(
+                                      height: 200,
+                                      width: 150,
+                                      child: Image.network(
+                                        filterQuality: FilterQuality.high,
+                                        fit: BoxFit.cover,
+                                        '${Vars.imagePath}${media.backDropPath}',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
                                 Text(
                                   release,
                                   style: const TextStyle(
@@ -142,26 +309,13 @@ class DetailScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 400,
-                          child: OverflowBox(
-                            child: Text(
-                              media.overview,
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
-                              style:
-                                  const TextStyle(color: color5, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20)
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            );
-          }),
+                      ),
+                    )
+                  ],
+                );
+              });
+        }
+      }),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(
@@ -186,11 +340,14 @@ class DetailScreen extends StatelessWidget {
         height: double.infinity,
         color: color2,
       ),
-      Image.network(
-        height: MediaQuery.of(context).size.height * 0.5,
-        width: double.infinity,
-        fit: BoxFit.cover,
-        '${Vars.imagePath}${media.posterPath}',
+      ColorFiltered(
+        colorFilter: const ColorFilter.mode(color4, BlendMode.modulate),
+        child: Image.network(
+          height: MediaQuery.of(context).size.height * 0.5,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          '${Vars.imagePath}${media.posterPath}',
+        ),
       ),
       const Positioned.fill(
         child: DecoratedBox(

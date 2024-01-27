@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:moviequeue/animations.dart';
 import 'package:moviequeue/models/media.dart';
-import 'package:moviequeue/pages/detailScreen.dart';
 import 'package:moviequeue/vars.dart';
 
 class BookmarkPage extends StatefulWidget {
@@ -49,7 +49,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                 future: _getData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -79,7 +79,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                _routeDetailPage(
+                                animationDetailPage(
                                     dataList[index], titolo, release));
                           },
                           child: ClipRRect(
@@ -99,31 +99,6 @@ class _BookmarkPageState extends State<BookmarkPage> {
               ),
             );
           }),
-    );
-  }
-
-  //animazione per la pagine di ricerca
-  PageRouteBuilder _routeDetailPage(Media media, titolo, release) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => DetailScreen(
-        media: media,
-        titolo: titolo,
-        release: release,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 0.8); // Inizio animazione dal basso
-        const end = Offset.zero;
-        const curve = Curves.fastEaseInToSlowEaseOut;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
     );
   }
 }

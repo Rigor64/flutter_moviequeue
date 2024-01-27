@@ -16,6 +16,7 @@ Future<void> main() async {
   Hive.registerAdapter(MediaAdapter());
 
   await Hive.openBox<Media>("favorites");
+  await Hive.openBox("account");
 
   runApp(const ProviderScope(child: MyApp()));
 
@@ -52,14 +53,13 @@ class MyApp extends StatelessWidget {
           if (userData == null) {
             //
             //Pagina visualizzata all'avvio dell'applicazione
-            return const MyHomePage(title: "Hello");
-            //return const LoginPage();
+            //return const MyHomePage(title: "Hello");
+            return const LoginPage();
           } else {
             return Navigator(
                 onGenerateInitialRoutes: (navigator, initialRoute) => [
                       MaterialPageRoute(
-                          builder: (ctx) =>
-                              MyHomePage(title: "Profilo ${userData.username}"))
+                          builder: (ctx) => const MyHomePage(title: "Homepage"))
                     ]);
           }
         }),

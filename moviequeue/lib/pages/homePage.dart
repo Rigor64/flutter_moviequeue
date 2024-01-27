@@ -47,12 +47,34 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
         //barra in alto
         toolbarHeight: 60,
         backgroundColor: color5,
-        title: const Text(
+        title: Row(
+          children: [
+            const SizedBox(
+              width: 16,
+            ),
+            Image.asset(
+              'images/appIcon.png',
+              fit: BoxFit.fill,
+              height: 40,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              "Movie Queue",
+              style: TextStyle(fontWeight: FontWeight.w800),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        centerTitle: true,
+        /*const Text(
           "Movie Queue",
           style: TextStyle(fontWeight: FontWeight.w800),
           textAlign: TextAlign.center,
         ),
         centerTitle: true,
+        */
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
