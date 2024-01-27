@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviequeue/animations.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/pages/detailScreen.dart';
 import 'package:moviequeue/vars.dart';
@@ -28,7 +29,7 @@ class movieSlider extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    _routeDetailPage(snapshot.data[index], titolo, release));
+                    animationDetailPage(snapshot.data[index], titolo, release));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
@@ -45,31 +46,6 @@ class movieSlider extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  //animazione per la pagine di ricerca
-  PageRouteBuilder _routeDetailPage(Media media, titolo, release) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => DetailScreen(
-        media: media,
-        titolo: titolo,
-        release: release,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 0.8); // Inizio animazione dal basso
-        const end = Offset.zero;
-        const curve = Curves.fastEaseInToSlowEaseOut;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
     );
   }
 }

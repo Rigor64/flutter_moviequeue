@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moviequeue/pages/detailScreen.dart';
+import 'package:moviequeue/animations.dart';
 import 'package:moviequeue/vars.dart';
 
 class tvSeriesSlider extends StatelessWidget {
@@ -26,16 +26,8 @@ class tvSeriesSlider extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      //passare al detail screen le informazioni riguardante il media corrispondente
-                      builder: (context) => DetailScreen(
-                        media: snapshot.data[index],
-                        titolo: titolo,
-                        release: release,
-                      ),
-                    ));
+                Navigator.push(context,
+                    animationDetailPage(snapshot.data[index], titolo, release));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),

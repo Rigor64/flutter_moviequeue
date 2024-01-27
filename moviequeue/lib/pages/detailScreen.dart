@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final Media media;

@@ -58,8 +58,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
                       itemCount: dataList.length,
                       physics: const BouncingScrollPhysics(),
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 350,
+                              //crossAxisCount: 2,
                               crossAxisSpacing: 20,
                               mainAxisSpacing: 20),
                       itemBuilder: (context, index) {
