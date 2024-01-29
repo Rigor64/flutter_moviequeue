@@ -66,17 +66,24 @@ In altro a destra nella Homepage ci sarà anche la possibilità di accedere alla
 Per questo progetto sono stati utilizzati i seguenti pacchetti aggiuntivi:
 
 * [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar) - Per la creazione del widget che legge la percentuale di gradimento di ogni media
+* [flutter_riverpod](https://pub.dev/packages/flutter_riverpod) - Un framework reattivo per la cache e il data-binding
+* [uuid](https://pub.dev/packages/uuid) - Gestione di identifier unici
+* [http](https://pub.dev/packages/http) - Crea richieste HTTP
+* [path_provider](https://pub.dev/packages/path_provider) - Usato per gestire la posizione dei file di sistema
+* [hive_flutter](https://pub.dev/packages/hive_flutter) - Un semplice database chiave-valore
+* [curved_navigation_bar](https://pub.dev/packages/curved_navigation_bar) - Una barra di navigazione animata 
+* [google_fonts](https://pub.dev/packages/google_fonts) - Per la gestione di font google che non sono stati inseriti nel pacchetto di default di flutter
+* [flutter_font_icons](https://pub.dev/packages/flutter_font_icons) - Icone personalizzabili per flutter
+* [carousel_slider](https://pub.dev/packages/carousel_slider) - Usato per la creazione di carousel per la visualizzazione dei media
+* [appinio_swiper](https://pub.dev/packages/appinio_swiper) - Usato per la creazione delle card trascinabili
+* [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) - Per la gestione dell'icona dell'applicazione sui diversi dispositivi
 
-Inoltre per poter prelevare i dati relativi ai media da server TMDB è necessario procurarsi un API e inserirla in `Vars.dart`
-    ```dart
-    static const apiKey = 'ENTER YOUR API';
-    var headers = {
-    'accept': 'application/json',
-    'Authorization':
-        'Bearer ENTER YOUR API'
-    };
-    ```
+Inoltre per poter prelevare i dati relativi ai media da server TMDB è necessario procurarsi un API e inserirla in `Vars.dart`, sostituendo 'ENTER YOUR API':
 
+```dart
+static const apiKey = 'ENTER YOUR API';
+var headers = {'accept': 'application/json' , 'Authorization': 'Bearer ENTER YOUR API' };
+```
 
 <p align="right">(<a href="#readme-top">Torna su/a>)</p>
 
