@@ -53,13 +53,14 @@ Gli elementi aggiunti ai preferiti hanno una pagina assestante, consultabile, co
 ## User Experience
 
 L'utente accederà all'applicativo tramite l'inserimento di username e password. Nel caso in cui si volesse creare un nuovo account, i dati relativi al precedente account verranno rimossi, ma non gli elementi aggiunti ai preferiti.
+
 <br />
 <div align="center">
     <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20112951.png" alt="Screen1" width="900" height="500">
 </div>
 <br />
 
-La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel contenenti varie categorie di media. 
+La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel contenenti varie categorie di media. Ogni elemento può essere visionato tramite la selezione dei media specifico che aprirà una pagina Dettagli relativa.
 
 <br />
 <div align="center">
@@ -99,7 +100,7 @@ Per questo progetto sono stati utilizzati i seguenti pacchetti aggiuntivi:
 * [appinio_swiper](https://pub.dev/packages/appinio_swiper) - Usato per la creazione delle card trascinabili
 * [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons) - Per la gestione dell'icona dell'applicazione sui diversi dispositivi
 
-Inoltre per poter prelevare i dati relativi ai media da server TMDB è necessario procurarsi un API e inserirla in `Vars.dart`, sostituendo 'ENTER YOUR API':
+Inoltre per poter prelevare i dati relativi ai media da server è necessario procurarsi un API dal sito uufficiale di TMDB e inserirla in `Vars.dart`, sostituendo 'ENTER YOUR API':
 
 ```dart
 static const apiKey = 'ENTER YOUR API';
@@ -111,9 +112,11 @@ var headers = {'accept': 'application/json' , 'Authorization': 'Bearer ENTER YOU
 <!-- SCELTE IMPLEMENTATIVE -->
 ### Scelte implementative
 
-Resposive
-Database
-
-
+* L'applicativo è stato sviluppato per essere responsive sia per dispositivi mobili (con viusualizzazione orizzontale e verticale), sia per ambienti desktop.
+* Dal database utilizzato vengono estrapolate informazioni riguardo a film e serie tv tramite query specifiche, che successivamente vengono convertite un una lista dinamica personalizzata, tramite traduzione da linguaggio json.
+* La ricerca e la visualizzazione hanno dei limiti e dei dati mancanti dovuti a come il servizio TMDB gestisce i dati, ma nella maggior parte dei casi tutte le funzionalità operano in modo adeguato.
+* Viene gestito lo stato di ogni elemento attraverso l'uso di pagine StateFull e CustumerStateFull, che hanno l'obiettivo di tenere sotto controllo quale elemento stiamo visualizzando e in che posizione si trova la card di riferimento di ogni elemento
+* L'account prevede una registrazione iniziale e un successivo login ogni qualvolta l'utente accederà all'applicazione. I dati dell'account non sono direttamente collegati alla lista preferiti.
+* Nel file Vars.dart sono inseriti tutti i colorii relativi al tema utilizzato e l'API utilizzata per la realizzazione dell'applicativo.
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
