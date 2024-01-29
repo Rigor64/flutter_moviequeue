@@ -53,7 +53,18 @@ Gli elementi aggiunti ai preferiti hanno una pagina assestante, consultabile, co
 ## User Experience
 
 L'utente accederà all'applicativo tramite l'inserimento di username e password. Nel caso in cui si volesse creare un nuovo account, i dati relativi al precedente account verranno rimossi, ma non gli elementi aggiunti ai preferiti.
-La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel contenenti varie categorie di media. Le pagine successive hanno lo scopo di far scoprire nuovi film o serie tv tramite una serie di card che è possibile spostare per aggiungere ai preferiti. Vi è la possibilità di ricercare qualsiasi film disponibile nel catalogo e l'ultima pagina è riservata agli elementi aggiunti ai preferiti.
+<div align="center">
+    <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20112951.png" alt="Screen1" width="900" height="500">
+</div>
+
+La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel contenenti varie categorie di media. 
+<div align="center">
+    <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20113036.png" alt="Screen1" width="900" height="500">
+</div>
+Le pagine successive hanno lo scopo di far scoprire nuovi film o serie tv tramite una serie di card che è possibile spostare per aggiungere ai preferiti. Vi è la possibilità di ricercare qualsiasi film disponibile nel catalogo e l'ultima pagina è riservata agli elementi aggiunti ai preferiti.
+<div align="center">
+    <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20113131.png" alt="Screen1" width="900" height="500">
+</div>
 In altro a destra nella Homepage ci sarà anche la possibilità di accedere alla pagina contenente le informazioni relative all'account dell'utente.
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
@@ -85,10 +96,14 @@ static const apiKey = 'ENTER YOUR API';
 var headers = {'accept': 'application/json' , 'Authorization': 'Bearer ENTER YOUR API' };
 ```
 
-<p align="right">(<a href="#readme-top">Torna su/a>)</p>
+<p align="right">(<a href="#readme-top">Torna su</a>)</p>
 
 <!-- SCELTE IMPLEMENTATIVE -->
 ### Scelte implementative
+
+Resposive
+Database
+
 
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
