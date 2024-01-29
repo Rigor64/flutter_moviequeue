@@ -58,6 +58,7 @@ L'utente accederà all'applicativo tramite l'inserimento di username e password.
     <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20112951.png" alt="Screen1" width="900" height="500">
 </div>
 <br />
+
 La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel contenenti varie categorie di media. 
 
 <br />
@@ -65,12 +66,15 @@ La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel
     <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20113036.png" alt="Screen1" width="900" height="500">
 </div>
 <br />
+
 Le pagine successive hanno lo scopo di far scoprire nuovi film o serie tv tramite una serie di card che è possibile spostare per aggiungere ai preferiti. Vi è la possibilità di ricercare qualsiasi film disponibile nel catalogo e l'ultima pagina è riservata agli elementi aggiunti ai preferiti.
+
 <br />
 <div align="center">
     <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-01-29%20113131.png" alt="Screen1" width="900" height="500">
 </div>
 <br />
+
 In altro a destra nella Homepage ci sarà anche la possibilità di accedere alla pagina contenente le informazioni relative all'account dell'utente.
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
