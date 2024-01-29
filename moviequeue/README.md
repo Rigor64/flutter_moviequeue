@@ -18,18 +18,18 @@
       <a href="#descrizione-del-progetto">Descrizione del progetto</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#use-cases">Use cases</a>
+    </li>
+    <li>
+      <a href="#user-experience">User experience</a>
+    </li>
+    <li>
+      <a href="#tecnologia">Tecnologia</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#dependances">Dependances</a></li>
+        <li><a href="#scelte-implementative">Scelte implementative</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -40,6 +40,7 @@ Quest'applicazione offre all'utente la possibilità di visualizzare un catalogo 
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
 
+<!-- USE CASES -->
 ## Use cases
 
 L'utente avrà a disposizione la possibilità di creare un nuovo account al primo avvio dell'applicazione, con il quale potrà accedere ad ogni avvio dell'applicazione.
@@ -48,6 +49,7 @@ Gli elementi aggiunti ai preferiti hanno una pagina assestante, consultabile, co
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
 
+<!-- USER EXPERIENCE -->
 ## User Experience
 
 L'utente accederà all'applicativo tramite l'inserimento di username e password. Nel caso in cui si volesse creare un nuovo account, i dati relativi al precedente account verranno rimossi, ma non gli elementi aggiunti ai preferiti.
@@ -56,17 +58,30 @@ In altro a destra nella Homepage ci sarà anche la possibilità di accedere alla
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
 
-## Dependances
+<!-- TECNOLOGIA -->
+## Tecnologia
+<!-- DEPENDANCES -->
+### Dependances
 
 Per questo progetto sono stati utilizzati i seguenti pacchetti aggiuntivi:
 
 * [flutter_rating_bar](https://pub.dev/packages/flutter_rating_bar) - Per la creazione del widget che legge la percentuale di gradimento di ogni media
 
+Inoltre per poter prelevare i dati relativi ai media da server TMDB è necessario procurarsi un API e inserirla in `Vars.dart`
+    ```dart
+    static const apiKey = 'ENTER YOUR API';
+    var headers = {
+    'accept': 'application/json',
+    'Authorization':
+        'Bearer ENTER YOUR API'
+    };
+    ```
+
+
 <p align="right">(<a href="#readme-top">Torna su/a>)</p>
 
-## Scelte implementative
-
-
+<!-- SCELTE IMPLEMENTATIVE -->
+### Scelte implementative
 
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
