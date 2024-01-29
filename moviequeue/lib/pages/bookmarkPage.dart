@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
 

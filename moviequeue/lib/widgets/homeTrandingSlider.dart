@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/vars.dart';
 
 class homeTrandingSlider extends StatelessWidget {

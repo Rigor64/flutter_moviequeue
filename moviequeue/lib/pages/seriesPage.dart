@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moviequeue/api.dart';
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';
 

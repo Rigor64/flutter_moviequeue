@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/api.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/pages/bookmarkPage.dart';

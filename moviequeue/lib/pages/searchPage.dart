@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/api.dart';
 import 'package:moviequeue/models/media.dart';
 import 'package:moviequeue/vars.dart';

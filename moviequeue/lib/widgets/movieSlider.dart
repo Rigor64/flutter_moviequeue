@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moviequeue/animations.dart';
+import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/vars.dart';
 
 class movieSlider extends StatelessWidget {
