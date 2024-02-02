@@ -87,25 +87,19 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisSpacing: 20),
               itemCount: _searchResults.length,
               itemBuilder: (context, index) {
-                String titolo = "";
-                String release = "";
                 List<Media> data = _searchResults
                     .map((series) => Media.fromJson(series))
                     .toList();
-                if (data[index].type == "movie") {
-                  titolo = data[index].title;
-                  release = data[index].releaseDateFilm;
-                } else {
-                  titolo = data[index].name;
-                  release = data[index].releaseDateTVSeries;
-                }
+
                 return SizedBox(
                   height: 150,
                   child: GestureDetector(
                     //riconoscere un input a schermo
                     onTap: () {
-                      Navigator.push(context,
-                          animationDetailPage(data[index], titolo, release));
+                      Navigator.push(
+                          context,
+                          animationDetailPage(data[index], data[index].title,
+                              data[index].releaseDateFilm));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10),

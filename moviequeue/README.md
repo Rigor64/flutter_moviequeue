@@ -36,7 +36,7 @@
 <!-- DESCRIZIONE DEL PROGETTO -->
 ## Descrizione del progetto
 
-Quest'applicazione offre all'utente la possibilità di visualizzare un catalogo degli ultimi film e serie tv usciti nelle sale. I dati relativi ai media vengono prelevati tramite una comunicazione remota via HTTP, tramite il servizio gratuito di TMDB server. Permette di aggiungere i vari media ad una lista preferiti, oltre ad avere una vista in dettaglio per ogni media, che riporta le caratteristiche del film o della serie tv che è stato selezionato.
+Quest'applicazione offre all'utente la possibilità di visualizzare un catalogo degli ultimi film e serie tv usciti nelle sale. I dati relativi ai media vengono prelevati tramite una comunicazione remota via HTTP, tramite il servizio gratuito di TMDB, un database contenente le informazioni utili alla realizzazione di questo applicativo. Permette di aggiungere i vari media ad una lista preferiti, oltre ad avere una vista in dettaglio per ogni media, di cui ne riporta le caratteristiche principali.
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>
 
@@ -113,10 +113,10 @@ var headers = {'accept': 'application/json' , 'Authorization': 'Bearer ENTER YOU
 ### Scelte implementative
 
 * L'applicativo è stato sviluppato per essere responsive sia per dispositivi mobili (con viusualizzazione orizzontale e verticale), sia per ambienti desktop.
-* Dal database utilizzato vengono estrapolate informazioni riguardo a film e serie tv tramite query specifiche, che successivamente vengono convertite un una lista dinamica personalizzata, tramite traduzione da linguaggio json.
+* Dal database utilizzato vengono estrapolate informazioni riguardo a film e serie tv tramite query specifiche, che successivamente vengono convertite in una lista dinamica personalizzata, tramite traduzione da linguaggio json.
 * La ricerca e la visualizzazione hanno dei limiti e dei dati mancanti dovuti a come il servizio TMDB gestisce i dati, ma nella maggior parte dei casi tutte le funzionalità operano in modo adeguato.
-* Viene gestito lo stato di ogni elemento attraverso l'uso di pagine StateFull e CustumerStateFull, che hanno l'obiettivo di tenere sotto controllo quale elemento stiamo visualizzando e in che posizione si trova la card di riferimento di ogni elemento
+* Viene gestito lo stato di ogni elemento attraverso l'uso di pagine StateFull e CustumerStateFull, che hanno l'obiettivo di tenere sotto controllo quale elemento stiamo visualizzando e in che posizione si trova la card di riferimento di ogni elemento.
 * L'account prevede una registrazione iniziale e un successivo login ogni qualvolta l'utente accederà all'applicazione. I dati dell'account non sono direttamente collegati alla lista preferiti.
-* Nel file Vars.dart sono inseriti tutti i colorii relativi al tema utilizzato e l'API utilizzata per la realizzazione dell'applicativo.
+* Nel file Vars.dart sono inseriti tutti i colori relativi al tema utilizzato e l'API utilizzata per la realizzazione dell'applicativo.
 
 <p align="right">(<a href="#readme-top">Torna su</a>)</p>

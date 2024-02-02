@@ -214,7 +214,7 @@ class DetailScreen extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
                                         color: color5,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         shadows: [
                                           Shadow(
                                             blurRadius: 5.0,

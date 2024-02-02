@@ -107,6 +107,17 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                             children: [
                               //
                               //primo carosello di film e serie tv
+                              const Center(
+                                child: Text(
+                                  "Ultime uscite",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: color5,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 20),
                               SizedBox(
                                 //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
@@ -133,12 +144,15 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                               const SizedBox(height: 20),
                               //
                               //secondo carosello
-                              const Text(
-                                "Film del momento",
-                                style: TextStyle(
-                                  color: color5,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
+                              const Center(
+                                child: Text(
+                                  "Film del momento",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: color5,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 20),
@@ -166,12 +180,15 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
                               const SizedBox(height: 20),
                               //
                               //terzo carosello
-                              const Text(
-                                "Serie TV del momento",
-                                style: TextStyle(
-                                  color: color5,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
+                              const Center(
+                                child: Text(
+                                  "Serie TV del momento",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: color5,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
