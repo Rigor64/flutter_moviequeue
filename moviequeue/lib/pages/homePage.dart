@@ -11,6 +11,7 @@ import 'package:moviequeue/pages/searchPage.dart';
 import 'package:moviequeue/pages/seriesPage.dart';
 import 'package:moviequeue/vars.dart';
 import 'package:moviequeue/widgets/homeTrandingSlider.dart';
+import 'package:moviequeue/widgets/homeTrandingSliderHorizontal.dart';
 import 'package:moviequeue/widgets/movieSlider.dart';
 import 'package:moviequeue/widgets/tvSeriesSlider.dart';
 
@@ -89,144 +90,159 @@ class _MyHomePage extends ConsumerState<MyHomePage> {
           ),
         ],
       ),
-      body: ValueListenableBuilder(
-          valueListenable: Hive.box<Media>("favorites").listenable(),
-          builder: (context, box, child) {
-            return PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              children: [
-                Center(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //
-                              //primo carosello di film e serie tv
-                              const Center(
-                                child: Text(
-                                  "Ultime uscite",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: color5,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
+      body: OrientationBuilder(builder: (context, orientation) {
+        return ValueListenableBuilder(
+            valueListenable: Hive.box<Media>("favorites").listenable(),
+            builder: (context, box, child) {
+              return PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                children: [
+                  Center(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //
+                                //primo carosello di film e serie tv
+                                const Center(
+                                  child: Text(
+                                    "Ultime uscite",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: color5,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                                child: FutureBuilder(
-                                    future: trendingMedia,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasError) {
-                                        debugPrint(snapshot.error.toString());
-                                        return Center(
-                                          child:
-                                              Text(snapshot.error.toString()),
-                                        );
-                                      } else if (snapshot.hasData) {
-                                        return homeTrandingSlider(
-                                          snapshot: snapshot,
-                                        );
-                                      } else {
-                                        return const Center(
-                                            child: CircularProgressIndicator());
-                                      }
-                                    }),
-                              ),
-                              //
-                              const SizedBox(height: 20),
-                              //
-                              //secondo carosello
-                              const Center(
-                                child: Text(
-                                  "Film del momento",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: color5,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
+                                const SizedBox(height: 20),
+                                SizedBox(
+                                  //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                  child: FutureBuilder(
+                                      future: trendingMedia,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          debugPrint(snapshot.error.toString());
+                                          return Center(
+                                            child:
+                                                Text(snapshot.error.toString()),
+                                          );
+                                        } else if (snapshot.hasData) {
+                                          //cambio il carosello a seconda de come è orientato il dispositivo
+                                          if (orientation ==
+                                              Orientation.portrait) {
+                                            return homeTrandingSlider(
+                                              snapshot: snapshot,
+                                            );
+                                          } else {
+                                            return homeTrandingSliderHorizontal(
+                                              snapshot: snapshot,
+                                            );
+                                          }
+                                        } else {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                      }),
+                                ),
+                                //
+                                const SizedBox(height: 20),
+                                //
+                                //secondo carosello
+                                const Center(
+                                  child: Text(
+                                    "Film del momento",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: color5,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                              //
-                              SizedBox(
-                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                                child: FutureBuilder(
-                                    future: popularMovies,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasError) {
-                                        debugPrint(snapshot.error.toString());
-                                        return Center(
-                                          child:
-                                              Text(snapshot.error.toString()),
-                                        );
-                                      } else if (snapshot.hasData) {
-                                        return movieSlider(snapshot: snapshot);
-                                      } else {
-                                        return const Center(
-                                            child: CircularProgressIndicator());
-                                      }
-                                    }),
-                              ),
-                              //
-                              const SizedBox(height: 20),
-                              //
-                              //terzo carosello
-                              const Center(
-                                child: Text(
-                                  "Serie TV del momento",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: color5,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w800,
+                                const SizedBox(height: 20),
+                                //
+                                SizedBox(
+                                  //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                  child: FutureBuilder(
+                                      future: popularMovies,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          debugPrint(snapshot.error.toString());
+                                          return Center(
+                                            child:
+                                                Text(snapshot.error.toString()),
+                                          );
+                                        } else if (snapshot.hasData) {
+                                          return movieSlider(
+                                              snapshot: snapshot);
+                                        } else {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                      }),
+                                ),
+                                //
+                                const SizedBox(height: 20),
+                                //
+                                //terzo carosello
+                                const Center(
+                                  child: Text(
+                                    "Serie TV del momento",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: color5,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              SizedBox(
-                                //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
-                                child: FutureBuilder(
-                                    future: popularSeries,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasError) {
-                                        debugPrint(snapshot.error.toString());
-                                        return Center(
-                                          child:
-                                              Text(snapshot.error.toString()),
-                                        );
-                                      } else if (snapshot.hasData) {
-                                        return tvSeriesSlider(
-                                          snapshot: snapshot,
-                                        );
-                                      } else {
-                                        return const Center(
-                                            child: CircularProgressIndicator());
-                                      }
-                                    }),
-                              ),
-                            ])),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  //prima di far apparire il carosello di oggetti, verifichiamo che ci sia connessione col server
+                                  child: FutureBuilder(
+                                      future: popularSeries,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          debugPrint(snapshot.error.toString());
+                                          return Center(
+                                            child:
+                                                Text(snapshot.error.toString()),
+                                          );
+                                        } else if (snapshot.hasData) {
+                                          return tvSeriesSlider(
+                                            snapshot: snapshot,
+                                          );
+                                        } else {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        }
+                                      }),
+                                ),
+                              ])),
+                    ),
                   ),
-                ),
 
-                //altre pagine navigabili attraverso il bottom navigator
-                const MoviePage(),
-                const SeriesPage(),
-                const SearchPage(),
-                const BookmarkPage()
-              ],
-            );
-          }),
+                  //altre pagine navigabili attraverso il bottom navigator
+                  const MoviePage(),
+                  const SeriesPage(),
+                  const SearchPage(),
+                  const BookmarkPage()
+                ],
+              );
+            });
+      }),
+      //aggiunta del bottom navigation
       bottomNavigationBar: Container(
         margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
         child: CurvedNavigationBar(

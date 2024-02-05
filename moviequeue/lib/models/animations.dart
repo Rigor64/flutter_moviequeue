@@ -14,7 +14,7 @@ PageRouteBuilder animationDetailPage(Media media, titolo, release) {
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 0.8); // Inizio animazione dal basso
       const end = Offset.zero;
-      const curve = Curves.fastEaseInToSlowEaseOut;
+      const curve = Curves.ease;
 
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
       var offsetAnimation = animation.drive(tween);
@@ -32,7 +32,7 @@ PageRouteBuilder animationAccountPage() {
     pageBuilder: (context, animation, secondaryAnimation) =>
         const AccountPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 0.8); // Inizio animazione dal basso
+      const begin = Offset(1, 0.0); // Inizio animazione da sinistra
       const end = Offset.zero;
       const curve = Curves.fastEaseInToSlowEaseOut;
 

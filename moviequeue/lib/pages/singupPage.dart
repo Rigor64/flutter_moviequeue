@@ -59,143 +59,161 @@ class _SingupPageState extends State<SingupPage> {
                 //ho applicato un filtro all'immagine di sfondo
                 ColorFiltered(
                   colorFilter:
-                      const ColorFilter.mode(color2, BlendMode.hardLight),
+                      const ColorFilter.mode(color3, BlendMode.softLight),
                   child: Image.asset(
                     "images/slashScreenLogin.png", //immagine di background
                     fit: BoxFit.cover,
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 64, vertical: 16),
-                  child: Center(
-                    child: Container(
-                      //riquadro del login
-                      width: 800,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: color3.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                                color: color1.withOpacity(0.0),
-                                blurRadius: 12,
-                                offset: Offset.fromDirection(120, 8)),
-                          ]),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const Text(
-                            "Registra un nuovo account",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: color5,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          TextFormField(
-                            //box per l'username
-                            style: const TextStyle(color: color5, fontSize: 20),
-                            cursorColor: color2,
-                            decoration: const InputDecoration(
-                                labelStyle: TextStyle(color: color5),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: color5),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: color2),
-                                ),
-                                icon: Icon(
-                                  Icons.person,
-                                  color: color5,
-                                ),
-                                label: Text("Username",
-                                    style: TextStyle(color: color5))),
-                            controller: _ctrlUsername,
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                              //box per la password
-                              style:
-                                  const TextStyle(color: color5, fontSize: 20),
-                              cursorColor: color2,
-                              decoration: const InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: color5),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: color2),
-                                  ),
-                                  icon: Icon(Icons.key, color: color5),
-                                  label: Text("Password",
-                                      style: TextStyle(color: color5))),
-                              controller: _ctrlPassword,
-                              obscureText: true),
-                          const SizedBox(height: 16),
-                          Consumer(
-                              //box per il login
-                              builder: (ctx, ref, _) => ElevatedButton(
-                                  style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty
-                                        .resolveWith<Color?>(
-                                      (Set<MaterialState> states) {
-                                        if (states
-                                            .contains(MaterialState.pressed)) {
-                                          return color3; //colore login alla pressione
-                                        }
-                                        if (states
-                                            .contains(MaterialState.hovered)) {
-                                          return color4; // colore login al passaggio del mouse
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  child: const Text("Registrati",
-                                      style: TextStyle(
-                                          color: color1,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800)),
-                                  onPressed: () async {
-                                    if (_ctrlUsername!.text != "") {
-                                      if (_ctrlPassword!.text != "") {
-                                        await box.put(1, _ctrlUsername!.text);
-                                        await box.put(2, _ctrlPassword!.text);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar2);
-                                        debugPrint(box.get(1));
-                                        debugPrint(box.get(2));
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar1);
-                                      }
-                                    }
-                                  })),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
-                                );
-                              },
-                              child: const Text(
-                                "Hai già un account ?",
+                Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 64, vertical: 16),
+                      child: Center(
+                        child: Container(
+                          //riquadro del login
+                          width: 800,
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: color4.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: color1.withOpacity(0.0),
+                                    blurRadius: 12,
+                                    offset: Offset.fromDirection(120, 8)),
+                              ]),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              //titolo
+                              const Text(
+                                "Registra un nuovo account",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 30,
                                     color: color2,
                                     fontWeight: FontWeight.w600),
                               ),
-                            ),
+                              TextFormField(
+                                //box per l'username
+                                style: const TextStyle(
+                                    color: color2, fontSize: 20),
+                                cursorColor: color2,
+                                decoration: const InputDecoration(
+                                    labelStyle: TextStyle(color: color2),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: color5),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: color2),
+                                    ),
+                                    icon: Icon(
+                                      Icons.person,
+                                      color: color2,
+                                    ),
+                                    label: Text("Username",
+                                        style: TextStyle(color: color2))),
+                                controller: _ctrlUsername,
+                              ),
+                              const SizedBox(height: 16),
+                              TextField(
+                                  //box per la password
+                                  style: const TextStyle(
+                                      color: color2, fontSize: 20),
+                                  cursorColor: color2,
+                                  decoration: const InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: color5),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: color2),
+                                      ),
+                                      icon: Icon(Icons.key, color: color2),
+                                      label: Text("Password",
+                                          style: TextStyle(color: color2))),
+                                  controller: _ctrlPassword,
+                                  obscureText: true),
+                              const SizedBox(height: 16),
+                              Consumer(
+                                  //box per il login
+                                  builder: (ctx, ref, _) => ElevatedButton(
+                                      style: ButtonStyle(
+                                        overlayColor: MaterialStateProperty
+                                            .resolveWith<Color?>(
+                                          (Set<MaterialState> states) {
+                                            if (states.contains(
+                                                MaterialState.pressed)) {
+                                              return color3; //colore login alla pressione
+                                            }
+                                            if (states.contains(
+                                                MaterialState.hovered)) {
+                                              return color4; // colore login al passaggio del mouse
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      //pulsante
+                                      child: const Text("Registrati",
+                                          style: TextStyle(
+                                              color: color1,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w800)),
+                                      onPressed: () {
+                                        if (_ctrlUsername!.text != "") {
+                                          if (_ctrlPassword!.text != "") {
+                                            box.put(1, _ctrlUsername!.text);
+                                            box.put(2, _ctrlPassword!.text);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar2);
+                                            debugPrint(box.get(1));
+                                            debugPrint(box.get(2));
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginPage()),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar1);
+                                          }
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar1);
+                                        }
+                                      })),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginPage()),
+                                    );
+                                  },
+                                  //link in basso
+                                  child: const Text(
+                                    "Hai già un account ?",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: color2,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),

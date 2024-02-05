@@ -23,6 +23,7 @@ class AccountPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    //immagine centrale
                     Container(
                       alignment: Alignment.center,
                       width: 150.0,
@@ -38,6 +39,7 @@ class AccountPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    //nome
                     Text(
                       textAlign: TextAlign.center,
                       "Nome: $username",
@@ -58,6 +60,7 @@ class AccountPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    //password
                     Text(
                       textAlign: TextAlign.center,
                       "Password: $password",
@@ -80,13 +83,14 @@ class AccountPage extends StatelessWidget {
               ],
             );
           }),
+      // Torna alla pagina precedente
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Torna alla pagina precedente
+              Navigator.of(context).pop();
             },
             tooltip: 'Torna indietro',
             backgroundColor: color3,

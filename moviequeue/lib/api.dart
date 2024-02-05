@@ -22,10 +22,10 @@ class Api {
   static const searchUrl = 'https://api.themoviedb.org/3/search/movie';
 
   static const _discoverMovieUrl =
-      'https://api.themoviedb.org/3/discover/movie';
+      'https://api.themoviedb.org/3/discover/movie'; //non implementata
 
   static const _discoverTVUrl =
-      'https://api.themoviedb.org/3/discover/tv?language=it-IT';
+      'https://api.themoviedb.org/3/discover/tv?language=it-IT'; //non implementata
 
   Future<List<Media>> getTrendingMedia() async {
     //status code che identifica se la comunicazione sta avvenendo

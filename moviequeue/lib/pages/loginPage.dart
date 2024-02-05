@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moviequeue/pages/homePage.dart';
@@ -100,153 +101,161 @@ class _LoginPageState extends State<LoginPage> {
                         const ColorFilter.mode(color2, BlendMode.hardLight),
                     child: backImage,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 64, vertical: 16),
-                    child: Center(
-                      child: Container(
-                        //riquadro del login
-                        width: 800,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            color: color3.withOpacity(0.7),
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: color1.withOpacity(0.0),
-                                  blurRadius: 12,
-                                  offset: Offset.fromDirection(120, 8)),
-                            ]),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Text(
-                              "Effettua l'accesso",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: color5,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            TextFormField(
-                              //box per l'username
-                              style:
-                                  const TextStyle(color: color5, fontSize: 20),
-                              cursorColor: color2,
-                              decoration: const InputDecoration(
-                                  labelStyle: TextStyle(color: color5),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: color5),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: color2),
-                                  ),
-                                  icon: Icon(
-                                    Icons.person,
-                                    color: color5,
-                                  ),
-                                  label: Text("Username",
-                                      style: TextStyle(color: color5))),
-                              controller: _ctrlUsername,
-                            ),
-                            const SizedBox(height: 16),
-                            TextField(
-                                //box per la password
-                                style: const TextStyle(
-                                    color: color5, fontSize: 20),
-                                cursorColor: color2,
-                                decoration: const InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: color5),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: color2),
-                                    ),
-                                    icon: Icon(Icons.key, color: color5),
-                                    label: Text("Password",
-                                        style: TextStyle(color: color5))),
-                                controller: _ctrlPassword,
-                                obscureText: true),
-                            const SizedBox(height: 16),
-                            Consumer(
-                                //box per il login
-                                builder: (ctx, ref, _) => ElevatedButton(
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty
-                                          .resolveWith<Color?>(
-                                        (Set<MaterialState> states) {
-                                          if (states.contains(
-                                              MaterialState.pressed)) {
-                                            return color3; //colore login alla pressione
-                                          }
-                                          if (states.contains(
-                                              MaterialState.hovered)) {
-                                            return color4; // colore login al passaggio del mouse
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                    child: const Text("Login",
-                                        style: TextStyle(
-                                            color: color1,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800)),
-                                    onPressed: () async {
-                                      //prendiamo dal database i valori corrispondenti
-                                      String username = box.get(1) ?? "";
-                                      String password = box.get(2) ?? "";
-                                      ScaffoldMessenger.of(context)
-                                          .clearSnackBars();
-
-                                      if (username != "" && password != "") {
-                                        if (_ctrlUsername!.text == username &&
-                                            _ctrlPassword!.text == password) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackbar2);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const MyHomePage(
-                                                        title: "Homepage")),
-                                          );
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackbar1);
-                                        }
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar1);
-                                      }
-                                    })),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            SizedBox(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SingupPage()),
-                                  );
-                                },
-                                child: const Text(
-                                  "Non hai ancora un account?",
+                  Center(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 64, vertical: 16),
+                        child: Center(
+                          child: Container(
+                            //riquadro del login
+                            width: 800,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: color3.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: color1.withOpacity(0.0),
+                                      blurRadius: 12,
+                                      offset: Offset.fromDirection(120, 8)),
+                                ]),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const Text(
+                                  "Effettua l'accesso",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: color2,
-                                      decoration: TextDecoration.underline,
+                                      fontSize: 30,
+                                      color: color5,
                                       fontWeight: FontWeight.w600),
                                 ),
-                              ),
+                                TextFormField(
+                                  //box per l'username
+                                  style: const TextStyle(
+                                      color: color5, fontSize: 20),
+                                  cursorColor: color2,
+                                  decoration: const InputDecoration(
+                                      labelStyle: TextStyle(color: color5),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: color5),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: color2),
+                                      ),
+                                      icon: Icon(
+                                        Icons.person,
+                                        color: color5,
+                                      ),
+                                      label: Text("Username",
+                                          style: TextStyle(color: color5))),
+                                  controller: _ctrlUsername,
+                                ),
+                                const SizedBox(height: 16),
+                                TextField(
+                                    //box per la password
+                                    style: const TextStyle(
+                                        color: color5, fontSize: 20),
+                                    cursorColor: color2,
+                                    decoration: const InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: color5),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(color: color2),
+                                        ),
+                                        icon: Icon(Icons.key, color: color5),
+                                        label: Text("Password",
+                                            style: TextStyle(color: color5))),
+                                    controller: _ctrlPassword,
+                                    obscureText: true),
+                                const SizedBox(height: 16),
+                                Consumer(
+                                    //box per il login
+                                    builder: (ctx, ref, _) => ElevatedButton(
+                                        style: ButtonStyle(
+                                          overlayColor: MaterialStateProperty
+                                              .resolveWith<Color?>(
+                                            (Set<MaterialState> states) {
+                                              if (states.contains(
+                                                  MaterialState.pressed)) {
+                                                return color3; //colore login alla pressione
+                                              }
+                                              if (states.contains(
+                                                  MaterialState.hovered)) {
+                                                return color4; // colore login al passaggio del mouse
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        ),
+                                        child: const Text("Login",
+                                            style: TextStyle(
+                                                color: color1,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w800)),
+                                        onPressed: () async {
+                                          //prendiamo dal database i valori corrispondenti
+                                          String username = box.get(1) ?? "";
+                                          String password = box.get(2) ?? "";
+                                          ScaffoldMessenger.of(context)
+                                              .clearSnackBars();
+
+                                          if (username != "" &&
+                                              password != "") {
+                                            if (_ctrlUsername!.text ==
+                                                    username &&
+                                                _ctrlPassword!.text ==
+                                                    password) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackbar2);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const MyHomePage(
+                                                            title: "Homepage")),
+                                              );
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackbar1);
+                                            }
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar1);
+                                          }
+                                        })),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                SizedBox(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SingupPage()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Non hai ancora un account?",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: color2,
+                                          decoration: TextDecoration.underline,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

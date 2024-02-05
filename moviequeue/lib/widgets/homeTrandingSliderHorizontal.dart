@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:moviequeue/models/animations.dart';
 import 'package:moviequeue/vars.dart';
 
-class homeTrandingSlider extends StatelessWidget {
-  const homeTrandingSlider({super.key, required this.snapshot});
+class homeTrandingSliderHorizontal extends StatelessWidget {
+  const homeTrandingSliderHorizontal({super.key, required this.snapshot});
 
   final AsyncSnapshot snapshot;
 
@@ -18,7 +18,8 @@ class homeTrandingSlider extends StatelessWidget {
               //animazione di autoplay per scorrere le varie locandine
               height: 300,
               autoPlay: true,
-              viewportFraction: 0.5,
+              viewportFraction: 0.25,
+              aspectRatio: 16 / 9,
               enlargeCenterPage: true,
               pageSnapping: true,
               autoPlayCurve: Curves.fastOutSlowIn,
