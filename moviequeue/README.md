@@ -64,7 +64,7 @@ La prima pagina che viene visualizzata sarà l'Homepage che riporta tre Carousel
 
 <br />
 <div align="center">
-    <img src="https://github.com/Rigor64/flutter_moviequeue/blob/faf48250509a00ae7a89845d4b1cf0c6bf43838d/moviequeue/images/Screenshot%202024-02-05%20175942.png" alt="Screen1" width="900" height="500">
+    <img src="https://github.com/Rigor64/flutter_moviequeue/blob/main/moviequeue/images/Screenshot%202024-02-05%20175942.png" alt="Screen1" width="900" height="500">
 </div>
 <br />
 
